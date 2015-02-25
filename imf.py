@@ -23,6 +23,7 @@ n_new = n[:len(n)-1]
 m_1 = m[:len(n)-1]
 m_new = np.log(m[1:len(n)]/m[:len(n)-1])
 plt.plot(m_1, n_new/m_new, label='Logarithmically Flat IMF')
+print 'total number of stars: '+str(sum(n))
 m = []
 n = []
 first = True
@@ -43,8 +44,9 @@ m_new = np.log(m[1:len(n)]/m[:len(n)-1])
 plt.plot(m_1, n_new/m_new, label='Salpeter IMF')
 plt.ylabel(r'$\frac{dN}{d\log{M}}$', size=20)
 plt.xlabel(r'$M[M_\odot]$')
+print 'total number of stars: '+str(sum(n))
 plt.xscale('log')
-plt.yscale('log')
+#plt.yscale('log')
 plt.xlim(.5,100)
 plt.legend()
 plt.title('POPIII IMF (by counting formed stars)')
