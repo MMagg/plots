@@ -5,6 +5,7 @@ To be copied and modified for every application
 import numpy as np
 import matplotlib.pyplot as plt
 
+print 'Logarithmically flat IMF:' 
 m = []
 n = []
 first = True
@@ -24,6 +25,9 @@ m_1 = m[:len(n)-1]
 m_new = np.log(m[1:len(n)]/m[:len(n)-1])
 plt.plot(m_1, n_new/m_new, label='Logarithmically Flat IMF')
 print 'total number of stars: '+str(sum(n))
+print 'which equals a total mass of '+str(int(sum(n*m)))+' Msun'
+
+print '\nSalpeter IMF'
 m = []
 n = []
 first = True
@@ -45,9 +49,9 @@ plt.plot(m_1, n_new/m_new, label='Salpeter IMF')
 plt.ylabel(r'$\frac{dN}{d\log{M}}$', size=20)
 plt.xlabel(r'$M[M_\odot]$')
 print 'total number of stars: '+str(sum(n))
+print 'which equals a total mass of '+str(int(sum(n*m)))+' Msun'
 plt.xscale('log')
 #plt.yscale('log')
-plt.xlim(.5,100)
 plt.legend()
 plt.title('POPIII IMF (by counting formed stars)')
 plt.savefig('../plots/imf.jpg')
