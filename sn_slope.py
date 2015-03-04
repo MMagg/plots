@@ -11,6 +11,7 @@ full = np.zeros((3, mlev*nlev))
 n = np.zeros((mlev, nlev))
 m = np.zeros(mlev)
 z = np.zeros(nlev)
+N = 50.
 first = True
 i = 0
 f = open("../imf_test/output_vanilla/CCSN.dat", 'r')
@@ -20,10 +21,10 @@ for line in f:
     if first:
         first = False
     else:
-        n[i/nlev, i % nlev] = (float(colls[0]))
+        n[i/nlev, i % nlev] = (float(colls[0]))/N
         m[i/nlev] = (float(colls[1]))
         z[i % nlev] = (float(colls[2]))
-        full[:, i] = np.array([float(colls[0]), float(colls[1]),
+        full[:, i] = np.array([float(colls[0])/N, float(colls[1]),
                                float(colls[2])])
         i = i+1
 
