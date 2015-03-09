@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 nlev = 256
 mlev = 256
-yr = (31557600 )**(-1)
+yr = (31557600)**(-1)
 
 #vanilla
 print 'reading flat IMF'
@@ -17,15 +17,13 @@ n_v = np.zeros((mlev, nlev))
 m_v = np.zeros(mlev)
 z_v = np.zeros(nlev)
 t_v = np.zeros(nlev)
-first = True
+j = 0
 i = 0
 f = open("../imf_test/output_vanilla/CCSN.dat", 'r')
 for line in f:
     line = line.strip()
     colls = line.split()
-    if first:
-        first = False
-    else:
+    if j>1
         n_v[i/nlev, i % nlev] = (float(colls[0]))/N
         m_v[i/nlev] = (float(colls[1]))
         z_v[i % nlev] = (float(colls[2]))
@@ -33,6 +31,7 @@ for line in f:
         full_v[:, i] = np.array([float(colls[0])/N, float(colls[1]),
                                float(colls[2])])
         i = i+1
+    j= j+1
 f.close()
 
 
@@ -47,13 +46,12 @@ z_s = np.zeros(nlev)
 t_s = np.zeros(nlev)
 first = True
 i = 0
+j = 0
 f = open("../imf_test/output_slope/CCSN.dat", 'r')
 for line in f:
     line = line.strip()
     colls = line.split()
-    if first:
-        first = False
-    else:
+    if j>1
         n_s[i/nlev, i % nlev] = (float(colls[0]))/N
         m_s[i/nlev] = (float(colls[1]))
         z_s[i % nlev] = (float(colls[2]))
@@ -61,6 +59,8 @@ for line in f:
         full_s[:, i] = np.array([float(colls[0])/N, float(colls[1]),
                                float(colls[2])])
         i = i+1
+    j = j+1
+f.close()
 
 
 m_log_s = np.log(m_s[1:len(m_s)]/m_s[:len(m_s)-1])
