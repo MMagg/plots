@@ -13,7 +13,7 @@ mlev = 256
 yr = (31557600)**(-1)
 
 print 'reading core collapse sn data'
-files_cc = glob.glob(os.path.join('..', 'imf_test', 'output_vanilla', 'sn_rates', 'ccsn*'))
+files_cc = glob.glob(os.path.join('..', 'imf_test', 'output_mmax', 'sn_rates', 'ccsn*'))
 i_file = 0
 n_file = len(files_cc)
 
@@ -32,7 +32,7 @@ for f in files_cc:
     i_file = i_file+1
 
 print 'reading pair instability sn data'
-files_pi = glob.glob(os.path.join('..', 'imf_test', 'output_vanilla', 'sn_rates', 'pisn*'))
+files_pi = glob.glob(os.path.join('..', 'imf_test', 'output_mmax', 'sn_rates', 'pisn*'))
 i_file = 0
 n_file = len(files_pi)
 
@@ -59,8 +59,8 @@ for j_file in range(0, n_file):
     for i in range(0, nlev-1):
         rate_z_cc[j_file, i] = sum(n_cc[j_file, :, i])/(z_cc[j_file, i+1]-z_cc[j_file, i])/(t_cc[j_file, i]-t_cc[j_file, i+1])
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{min}=$'+paras[1]+\
-        r'$M_{\odot}$'+'\n'+r'$\eta=$'+paras[3]))
-    # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
+        r'$M_{\odot}$'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'))
+    # '\n'+r'$\eta=$'+paras[3]+
 
 
 plt.ylabel(r'$\frac{d\dot{N}}{dz}[yr^{-1}]$', size=20)
@@ -69,9 +69,9 @@ plt.xscale('linear')
 plt.xlim(0, 35)
 # print 'total number of CCSN: '+str(sum(n))
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.4, 1))
+plt.legend(bbox_to_anchor=(1.6, 1))
 plt.title(r'Core Collapse Supernova Rates in one Milkyway-like Galaxy')
-plt.savefig('../plots/both/CCSN_z.jpg', bbox_inches='tight')
+plt.savefig('../plots/mmax/CCSN_z.jpg', bbox_inches='tight')
 plt.show()
 plt.clf()
 
@@ -83,8 +83,8 @@ for j_file in range(0, n_file):
     for i in range(0, nlev-1):
         rate_z_pi[j_file, i] = sum(n_pi[j_file, :, i])/(z_pi[j_file, i+1]-z_pi[j_file, i])/(t_pi[j_file, i]-t_pi[j_file, i+1])
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{min}=$'+paras[1]+\
-        r'$M_{\odot}$'+'\n'+r'$\eta=$'+paras[3]))
-    # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
+        r'$M_{\odot}$'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'))
+    # '\n'+r'$\eta=$'+paras[3]+
 
 
 plt.ylabel(r'$\frac{d\dot{N}}{dz}[yr^{-1}]$', size=20)
@@ -93,9 +93,9 @@ plt.xscale('linear')
 plt.xlim(0, 35)
 # print 'total number of CCSN: '+str(sum(n))
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.4, 1))
+plt.legend(bbox_to_anchor=(1.6, 1))
 plt.title(r'Pair Instability Supernova Rates in one Milkyway-like Galaxy')
-plt.savefig('../plots/both/PISN_z.jpg', bbox_inches='tight')
+plt.savefig('../plots/mmax/PISN_z.jpg', bbox_inches='tight')
 plt.show()
 plt.clf()
 

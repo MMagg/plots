@@ -59,7 +59,7 @@ for j_file in range(0, n_file):
     for i in range(0, nlev-1):
         rate_z_cc[j_file, i] = sum(n_cc[j_file, :, i])/(z_cc[j_file, i+1]-z_cc[j_file, i])/(t_cc[j_file, i]-t_cc[j_file, i+1])
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{min}=$'+paras[1]+\
-        r'$M_{\odot}$'+'\n'+r'$\eta=$'+paras[3]))
+        r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 
@@ -69,9 +69,9 @@ plt.xscale('linear')
 plt.xlim(0, 35)
 # print 'total number of CCSN: '+str(sum(n))
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.4, 1))
+plt.legend(bbox_to_anchor=(1.6, 1))
 plt.title(r'Core Collapse Supernova Rates in one Milkyway-like Galaxy')
-plt.savefig('../plots/both/CCSN_z.jpg', bbox_inches='tight')
+plt.savefig('../plots/vanilla/CCSN_z.jpg', bbox_inches='tight')
 plt.show()
 plt.clf()
 
@@ -83,7 +83,7 @@ for j_file in range(0, n_file):
     for i in range(0, nlev-1):
         rate_z_pi[j_file, i] = sum(n_pi[j_file, :, i])/(z_pi[j_file, i+1]-z_pi[j_file, i])/(t_pi[j_file, i]-t_pi[j_file, i+1])
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{min}=$'+paras[1]+\
-        r'$M_{\odot}$'+'\n'+r'$\eta=$'+paras[3]))
+        r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 
@@ -93,9 +93,9 @@ plt.xscale('linear')
 plt.xlim(0, 35)
 # print 'total number of CCSN: '+str(sum(n))
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.4, 1))
+plt.legend(bbox_to_anchor=(1.6, 1))
 plt.title(r'Pair Instability Supernova Rates in one Milkyway-like Galaxy')
-plt.savefig('../plots/both/PISN_z.jpg', bbox_inches='tight')
+plt.savefig('../plots/vanilla/PISN_z.jpg', bbox_inches='tight')
 plt.show()
 plt.clf()
 
