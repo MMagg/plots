@@ -14,6 +14,7 @@ yr = (31557600)**(-1)
 
 print 'reading core collapse sn data'
 files_cc = glob.glob(os.path.join('..', 'imf_test', 'output_vanilla', 'sn_rates', 'ccsn*'))
+files_cc.sort()
 i_file = 0
 n_file = len(files_cc)
 
@@ -33,6 +34,7 @@ for f in files_cc:
 
 print 'reading pair instability sn data'
 files_pi = glob.glob(os.path.join('..', 'imf_test', 'output_vanilla', 'sn_rates', 'pisn*'))
+files_pi.sort()
 i_file = 0
 n_file = len(files_pi)
 
