@@ -14,7 +14,7 @@ del_c = 1.686
 rho_m = 1e-26*0.3086/2e30*(3.08567758e22)**3 # [M_sun/mpc^3]
 sigma_8=0.816
 print rho_m
-V = 3000 # [Mpc^3]
+V = 1000 # [Mpc^3]
 skip = 80
 n = 1 # number of galaxies to be sampled at the same time
 
@@ -63,10 +63,10 @@ gal_list = []
 plt.show()
 while M_sum <= M_max:
     m_curr = sample(X_of_Xi, n)
+    M_sum = M_sum +sum(m_curr)
+    print M_sum/M_max*100., '%'
     for m1 in m_curr:
-        M_sum = M_sum +sum(m_curr)
-        print M_sum/M_max*100., '%'
-        if m1 > 1e9:
+        if m1 > 1e11 and m1<1e13  :
             gal_list.append(m1)
 gal_list = np.array(gal_list)
 plt.figure(figsize = (8,8))
