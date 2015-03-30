@@ -39,7 +39,11 @@ for f in files:
 
 print 'plotting'
 plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
+<<<<<<< HEAD
+for j_file in range(n_file):
+=======
 for j_file in [0, 1, 2]:
+>>>>>>> f7ec3066b82c637f8b168ac72ee63bb596cfd8fb
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', files[j_file])
     plt.plot(z[j_file, :], tau[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))+r'$M_{min}=$'+str(float(paras[1]))+r'$M_{\odot}$'))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+

@@ -19,7 +19,7 @@ tau_arr = np.zeros(nlev)
 tau_arr.fill(tau_planck)
 
 print 'reading data'
-files = glob.glob(os.path.join('..', 'imf_test', 'output_vanilla', 'z_tauIII*'))
+files = glob.glob(os.path.join('..', 'high_n_data', 'z_tauIII*'))
 i_file = 0
 n_file = len(files)
 
@@ -33,15 +33,23 @@ for f in files:
     z[i_file, :] = data[:, 0]
     tau[i_file, :] = data[:, 1]
     tau_std[i_file, :] = data[:, 2]
+<<<<<<< HEAD
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', files[i_file])
+=======
+    paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[i_file]))
+>>>>>>> f7ec3066b82c637f8b168ac72ee63bb596cfd8fb
     i_file = i_file + 1
 
 
 print 'plotting'
 plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
-for j_file in range(n_file):
+for j_file in [0, 1, 2]:
+<<<<<<< HEAD
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', files[j_file])
-    plt.plot(z[j_file, :], tau[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))+r'$M_{min}=$'+str(float(paras[1]))+r'$M_{\odot}$'))
+=======
+    paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[j_file]))
+>>>>>>> f7ec3066b82c637f8b168ac72ee63bb596cfd8fb
+    plt.plot(z[j_file, :], tau[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 plt.plot(z[0, :], tau_arr, label=('Planck 2014'), color='black', linestyle='-')
 plt.plot(z[0, :], tau_arr-sig_tau, label=(r'$1\sigma$ error'), color='black', linestyle='-.')
@@ -55,7 +63,7 @@ plt.xlim(0, 35)
 # plt.yscale('log')
 plt.legend(bbox_to_anchor=(1.0, 0.5))
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
-plt.savefig('../plots/reproduced/tau.jpg', bbox_inches='tight')
+plt.savefig('../high_n_data/plots/tau.jpg', bbox_inches='tight')
 plt.show()
 plt.clf()
 
