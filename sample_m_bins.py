@@ -58,8 +58,10 @@ plt.yscale('log')
 X_of_Xi = interp1d(cx, x)
 
 M_sum = 0
-gal_list = []
-gal_list_low = []
+gal_list_8 = []
+gal_list_9 = []
+gal_list_10 = []
+gal_list_11 = []
 
 plt.show()
 while M_sum <= M_max:
@@ -67,26 +69,29 @@ while M_sum <= M_max:
     M_sum = M_sum +sum(m_curr)
     print M_sum/M_max*100., '%'
     for m1 in m_curr:
-        if m1 > 1e9 and m1<1e13  :
-            gal_list.append(m1)
-        if m1 > 1e6 and m1<1e9 and np.random.random(1) < 0.05 :
-            gal_list_low.append(m1)
-gal_list = np.array(gal_list)
-plt.figure(figsize = (8,8))
-plt.hist(gal_list, log = True, bins=np.logspace(9, 14, 50))
-plt.xscale('log')
-plt.ylabel('Number of clusters')
-plt.xlabel(r'$M[M_{\odot}]$')
-plt.savefig('../plots/galaxy_distr.jpg')
+        if m1 > 1e8 and m1<1e9  :
+            gal_list_8.append(m1)
+        if m1 > 1e9 and m1<1e10  :
+            gal_list_9.append(m1)
+        if m1 > 1e10 and m1<1e11  :
+            gal_list_10.append(m1)
+        if m1 > 1e11 and m1<1e12  :
+            gal_list_11.append(m1)
+gal_list_8 = np.array(gal_list_8)
+gal_list_9 = np.array(gal_list_9)
+gal_list_10 = np.array(gal_list_10)
+gal_list_11 = np.array(gal_list_11)
 plt.show()
 if M_sum/M_max*100.<102.:
     print 'writing output to files'
-    print 'Mass in high M galaxies:', sum(gal_list)
-    print 'Mass in low M galaxies:', sum(gal_list_low)/0.05
-    gal_list = np.hstack([len(gal_list), gal_list])
-    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list.dat'), gal_list)
-    gal_list_low = np.hstack([len(gal_list_low), gal_list_low])
-    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_low.dat'), gal_list_low)
+    gal_list_8 = np.hstack([len(gal_list_8), gal_list_8])
+    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_8.dat'), gal_list_8)
+    gal_list_9 = np.hstack([len(gal_list_9), gal_list_9])
+    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_9.dat'), gal_list_9)
+    gal_list_10 = np.hstack([len(gal_list_10), gal_list_10])
+    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_10.dat'), gal_list_10)
+    gal_list_11 = np.hstack([len(gal_list_11), gal_list_11])
+    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_11.dat'), gal_list_11)
 else:
     print 'ERROR: SAMPLING ENDED BY LARGE GALAXY'
     print 'NO OUTPUT FILES WRITTEN'
