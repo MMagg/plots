@@ -19,7 +19,7 @@ km_to_cm = 1.0e5 # cm/km
 omega_m = 0.3086
 omega_l = 0.6914
 V = 30 #Mpc^3
-rad_to_arcmin = np.pi/10800
+rad_to_arcmin = 10800/np.pi
 
 print 'reading core collapse sn data'
 files_cc = glob.glob(os.path.join('..', 'high_n_data', 'sn_rates', 'ccsn*'))
@@ -89,7 +89,7 @@ for j_file in range(0, n_file):
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
-        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/rad_to_arcmin**(-2)
+        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{min}=$'+paras[1]+\
         r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
