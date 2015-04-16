@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import glob
 import os
 import re
+from copy import deepcopy
 
 n_eta = 3
 n_mmin = 2
@@ -15,40 +16,28 @@ mlev = 256
 
 
 print 'reading data'
-files = glob.glob(os.path.join('..', 'Code', 'output_vanilla', 'z_supp*'))
+files = glob.glob(os.path.join('output_mmax', 'z_supp*'))
 i_file = 0
 n_file = len(files)
 
 z = np.zeros((n_file, nlev))
 m = np.zeros((n_file, nlev))
-m_std = np.zeros((n_file, nlev))
 m_crit = np.zeros((n_file, nlev))
-m_crit_std = np.zeros((n_file, nlev))
 t_dyn = np.zeros((n_file, nlev))
-t_dyn_std = np.zeros((n_file, nlev))
 z_enr = np.zeros((n_file, nlev))
-z_enr_std = np.zeros((n_file, nlev))
 LW = np.zeros((n_file, nlev))
-LW_std = np.zeros((n_file, nlev))
-more = np.zeros((n_file, nlev))
-more_std = np.zeros((n_file, nlev))
+anys = np.zeros((n_file, nlev))
 
 for f in files:
     print os.path.basename(f)
     data = np.loadtxt(f)
     z[i_file, :] = data[:, 0]
-    m[i_file, :] = data[:, 13]
-    m_std[i_file, :] = data[:, 14]
+    m[i_file, :] = data[:, 1]
     m_crit[i_file, :] = data[:, 3]
-    m_crit_std[i_file, :] = data[:, 4]
     t_dyn[i_file, :] = data[:, 5]
-    t_dyn_std[i_file, :] = data[:, 6]
     z_enr[i_file, :] = data[:, 7]
-    z_enr_std[i_file, :] = data[:, 7]
     LW[i_file, :] = data[:, 9]
-    LW_std[i_file, :] = data[:, 10]
-    more[i_file, :] = data[:, 11]
-    more_std[i_file, :] = data[:, 12]
+    anys[i_file, :] = data[:, 11]
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[i_file]))
     i_file = i_file + 1
 
@@ -56,27 +45,53 @@ for f in files:
 print 'plotting'
 plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
 for j_file in range(n_file):
-    all_sup = more[j_file, :]
+    all_sup = anys[j_file, :]+m_crit[j_file, :]
+    test_array = (all_sup > 0)
+    all_sup = all_sup[test_array]
+    fraction_of = all_sup
+    z_curr = z[j_file, test_array]
+    m_curr = m[j_file, test_array]
+    m_crit_curr = m_crit[j_file, test_array]
+    t_dyn_curr = t_dyn[j_file, test_array]
+    z_enr_curr = z_enr[j_file, test_array]
+    LW_curr = LW[j_file, test_array]
+    anys_curr = anys[j_file, test_array]
+    all_ex_m = LW[j_file, test_array ]+ z_enr[j_file, test_array]+t_dyn[j_file, test_array]
+    more = LW[j_file, test_array]+ z_enr[j_file, test_array]+t_dyn[j_file, test_array]-anys[j_file, test_array]
+    renorm = np.zeros(len(z_curr))
+    for i in range(len(z_curr)):
+        if all_ex_m[i]>0:
+            renorm[i] = (anys_curr[i]-more[i])/all_ex_m[i]
+        else:
+            renorm[i] = 1
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[j_file]))
-    supp =  t_dyn[j_file, :]/all_sup
-    plt.plot(z[j_file, :], supp, label=(r'$t_{dyn}$'))
-    supp = LW[j_file, :]/all_sup #+supp
-    plt.plot(z[j_file, :], supp, label=(r'$LW$'))
-    supp = z_enr[j_file, :]/all_sup #+ supp
-    plt.plot(z[j_file, :], supp, label=(r'$Z_{enr}$'))
-    supp = more[j_file, :]/all_sup #+ supp
-    plt.plot(z[j_file, :], supp, label=(r'$any$'))
-    supp =m_crit[j_file, :]/all_sup #+ supp
-    plt.plot(z[j_file, :], supp, label=(r'$m_{crit}$'))
+    supp =  t_dyn[j_file, test_array]*renorm/fraction_of
+    plt.plot(z_curr, supp, color='lightblue', label=(r'$t_{dyn}$'))
+    plt.fill_between(z_curr, supp, 1.0e-6, facecolor='lightblue')#, interpolate=True)
+    last = deepcopy(supp)
+    supp = LW[j_file, test_array]*renorm/fraction_of +supp
+    plt.plot(z_curr, supp, color='purple', label=(r'$LW$'))
+    plt.fill_between(z_curr, supp, last, facecolor='purple')#, interpolate=True)
+    last = deepcopy(supp)
+    supp = z_enr[j_file, test_array]*renorm/fraction_of + supp
+    plt.plot(z_curr, supp, color='green', label=(r'$Z_{enr}$'))
+    plt.fill_between(z_curr, supp, last, facecolor='green')#, interpolate=True)
+    last = deepcopy(supp)
+    supp = anys[j_file, test_array]/fraction_of
+    plt.plot(z_curr, supp, color='red', label=(r'$Z_{enr}/t_{dyn}/LW$'))
+    plt.fill_between(z_curr, supp, last, facecolor='red')#, interpolate=True)
+    last = deepcopy(supp)
+    supp =m_crit[j_file, test_array]/fraction_of + supp
+    plt.plot(z_curr, supp, color='blue', label=(r'$m_{crit}$'))
+    plt.fill_between(z_curr, supp, last, facecolor='blue')#, interpolate=True)
     plt.ylabel(r'gas mass fraction', size=16)
     plt.xlabel(r'redshift $z$', size = 16)
-    plt.xscale('linear')
-    plt.xlim(0, 35)
-    #plt.ylim(1.0e-4,10.0)
-    plt.yscale('log')
+    plt.xlim(min(z_curr),max(z_curr))
+    plt.ylim(1.0e-3,1.0)
+    #plt.yscale('log', nonposy='clip')
     plt.legend(bbox_to_anchor=(1.3, 0.5))
-    plt.grid(b=True, which='both', color='0.65',linestyle='-')
-    plt.savefig('../high_n_data/plots/z_supp_eta'+paras[3]+'.jpg', bbox_inches='tight')
-    plt.show()
+    #plt.grid(b=True, which='both', color='0.65',linestyle='-')
+    plt.savefig('z_supp_mmax'+paras[2]+'mmin'+paras[1]+'.jpg', bbox_inches='tight')
+    #plt.show()
     plt.clf()
 

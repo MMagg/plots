@@ -80,7 +80,7 @@ for f in files_pi:
 
 
 # redshift plots
-print 'plotting as function of redshift'
+print 'plotting CC as function of redshift'
 rate_z_cc = np.zeros((n_file, nlev-1))
 for j_file in range(0, n_file):
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files_cc[j_file]))
@@ -89,8 +89,9 @@ for j_file in range(0, n_file):
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
-        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
-    plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
+        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+    cum_rate = cumtrapz(rate_z_cc[j_file, :], x=z_cc[j_file, :-1])
+    plt.plot(z_cc[j_file, 1:-1], max(cum_rate)-cum_rate, label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
@@ -100,43 +101,42 @@ plt.xlabel(r'$z$')
 plt.xscale('linear')
 plt.yscale('log')
 plt.xlim(0, 35)
-plt.yscale('log')
 plt.legend(bbox_to_anchor=(1.6, 1))
-plt.title(r'Core Collapse Supernova Rates$')
-plt.savefig('CCSN_angle.jpg', bbox_inches='tight')
+plt.title(r'Cumulativ Core Collapse Supernova Rates$')
+plt.savefig('CCSN_angle_cumulativ.jpg', bbox_inches='tight')
 # plt.show()
 plt.clf()
 
 # redshift plots
+print 'plotting PI as function of redshift'
 plot = False
-print 'plotting as function of redshift'
 rate_z_pi = np.zeros((n_file, nlev-1))
 for j_file in range(0, n_file):
+    paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files_pi[j_file]))
     if (sum(sum(n_pi[j_file, :, :])) == 0):
         continue
-    paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files_pi[j_file]))
     plot = True
     for i in range(0, nlev-1):
         dN = sum(n_pi[j_file, :, i])
         dz = z_pi[j_file, i+1]-z_pi[j_file, i]
         dt = t_pi[j_file, i]-t_pi[j_file, i+1]
         dr = r_pi[j_file, i+1]-r_pi[j_file, i]
-        rate_z_pi[j_file, i] = dN/dt/V*(z_pi[j_file, i]+1)**2*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
-    plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
+        rate_z_pi[j_file, i] = dN/dt/V*(z_pi[j_file, i]+1)**2*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+    cum_rate = cumtrapz(rate_z_pi[j_file, :], x=z_pi[j_file, :-1])
+    plt.plot(z_pi[j_file, 1:-1], max(cum_rate)-cum_rate, label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 if plot:
-    plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(arcmin^2yr)^{-1}]$', size=20)
+    plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
     plt.xlabel(r'$z$')
     plt.xscale('linear')
     plt.yscale('log')
     plt.xlim(0, 35)
-    plt.yscale('log')
     plt.legend(bbox_to_anchor=(1.6, 1))
-    plt.title(r'Pair Instability Supernova Rates')
-    plt.savefig('PISN_angle.jpg', bbox_inches='tight')
-    #plt.show()
+    plt.title(r'Cumulativ Pair Instability Supernova Rates')
+    plt.savefig('PISN_angle_cumulativ.jpg', bbox_inches='tight')
+    # plt.show()
     plt.clf()
 else:
     print 'NO PISN RECORDED'

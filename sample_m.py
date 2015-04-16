@@ -44,16 +44,17 @@ def dn_dm(m, sigma, alpha):
     # See Lacey&Cole 1991 eq 2.11
     return y
 
-data = np.loadtxt(os.path.join('..', 'imf_test', 'Data', 'pk_Planck13.dat.spline'), skiprows = 1)
+data = np.loadtxt(os.path.join('..', 'Code', 'Data', 'pk_Planck13.dat.spline'), skiprows = 1)
 m = data[skip:,0]
 sigma = data[skip:,1]
 alpha = data[skip:,3] # d ln \sigma / d ln m
 dn = dn_dm(m, sigma, alpha)
 M_max = simps(dn*m, m)*V
 print sum((dn[:-1]+dn[1:])/2*(m[1:]-m[:-1])*m[1:])*V
-print trapz(dn*m, m)*V
+print V*trapz(dn*m, m)
 print simps(dn*m, m)*V
 print rho_m*V
+raw_input("Press enter to continue")
 
 x = m[::-1]
 dn = dn[::-1]
@@ -70,7 +71,6 @@ M_sum = 0
 gal_list = []
 gal_list_low = []
 
-plt.show()
 while M_sum <= M_max:
     m_curr = sample(X_of_Xi, n)
     M_sum = M_sum +sum(m_curr)
@@ -86,6 +86,7 @@ plt.hist(gal_list, log = True, bins=np.logspace(9, 15, 60))
 plt.xscale('log')
 plt.ylabel('Number of clusters')
 plt.xlabel(r'$M[M_{\odot}]$')
+
 if M_sum/M_max*100.<102. and sys.argv[1] == '-output':
     print 'writing output to files'
     print 'Mass in high M halos:', sum(gal_list)

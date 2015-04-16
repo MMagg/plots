@@ -19,7 +19,8 @@ tau_arr = np.zeros(nlev)
 tau_arr.fill(tau_planck)
 
 print 'reading data'
-files = glob.glob(os.path.join('..', 'high_n_data', 'z_tauIII*'))
+files = glob.glob(os.path.join('output_mmax', 'z_tauIII*'))
+files.sort()
 i_file = 0
 n_file = len(files)
 
@@ -38,10 +39,11 @@ for f in files:
 
 
 print 'plotting'
-plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
-for j_file in [0, 1, 2]:
+#plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
+for j_file in range(n_file):
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[j_file]))
-    plt.plot(z[j_file, :], tau[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))))
+    plt.plot(z[j_file, :], tau[j_file, :], label=(r'$M_{max}=$'+str(float(paras[2]))+\
+        r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 plt.plot(z[0, :], tau_arr, label=('Planck 2014'), color='black', linestyle='-')
 plt.plot(z[0, :], tau_arr-sig_tau, label=(r'$1\sigma$ error'), color='black', linestyle='-.')
@@ -53,9 +55,9 @@ plt.xlabel(r'redshift $z$', size = 16)
 plt.xscale('linear')
 plt.xlim(0, 35)
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.0, 0.5))
+plt.legend(bbox_to_anchor=(1.0, 0.6))
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
-plt.savefig('../high_n_data/plots/tau.jpg', bbox_inches='tight')
-plt.show()
+plt.savefig(os.path.join('tau.jpg'), bbox_inches='tight')
+#plt.show()
 plt.clf()
 
