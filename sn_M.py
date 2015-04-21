@@ -28,7 +28,7 @@ for f in files_cc:
     m_cc = data[:, 1]
     z_cc = data[:, 2]
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(f))
-    plt.scatter(z_cc, m_cc, s=0.02, label=(r'$M_{min}=$'+paras[1]+\
+    plt.scatter(z_cc, m_cc, s=0.02, label=(r'$M_{max}=$'+paras[2]+\
         r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
     plt.ylabel(r'$M[M_{\odot}]$', size=20)
     plt.xlabel(r'$z$',  size=20)
@@ -58,7 +58,7 @@ for f in files_pi:
     m_pi = data[:, 1]
     z_pi = data[:, 2]
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(f))
-    plt.scatter(z_pi, m_pi, s=0.02, label=(r'$M_{min}=$'+paras[1]+\
+    plt.scatter(z_pi, m_pi, s=0.02, label=(r'$M_{max}=$'+paras[2]+\
         r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
     plt.ylabel(r'$M[M_{\odot}]$', size=20)
     plt.xlabel(r'$z$',  size=20)

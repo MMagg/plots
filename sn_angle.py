@@ -28,7 +28,7 @@ i_file = 0
 n_file = len(files_cc)
 
 def dr(z):
-    y = c/H_0/km_to_cm/np.sqrt(omega_m*(1+z)**3+omega_l)
+    y = c/(H_0*km_to_cm)/np.sqrt(omega_m*(1+z)**3+omega_l)
     return y
 
 
@@ -89,7 +89,7 @@ for j_file in range(0, n_file):
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
-        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
+        rate_z_cc[j_file, i] = dN/dt/V/(z_cc[j_file, i]+1)*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
@@ -121,7 +121,7 @@ for j_file in range(0, n_file):
         dz = z_pi[j_file, i+1]-z_pi[j_file, i]
         dt = t_pi[j_file, i]-t_pi[j_file, i+1]
         dr = r_pi[j_file, i+1]-r_pi[j_file, i]
-        rate_z_pi[j_file, i] = dN/dt/V*(z_pi[j_file, i]+1)**2*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
+        rate_z_pi[j_file, i] = dN/dt/V/(z_pi[j_file, i]+1)*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+

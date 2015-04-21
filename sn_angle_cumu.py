@@ -89,7 +89,7 @@ for j_file in range(0, n_file):
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
-        rate_z_cc[j_file, i] = dN/dt/V*(z_cc[j_file, i]+1)**2*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+        rate_z_cc[j_file, i] = dN/dt/V/(z_cc[j_file, i]+1)*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
     cum_rate = cumtrapz(rate_z_cc[j_file, :], x=z_cc[j_file, :-1])
     plt.plot(z_cc[j_file, 1:-1], max(cum_rate)-cum_rate, label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
@@ -121,7 +121,7 @@ for j_file in range(0, n_file):
         dz = z_pi[j_file, i+1]-z_pi[j_file, i]
         dt = t_pi[j_file, i]-t_pi[j_file, i+1]
         dr = r_pi[j_file, i+1]-r_pi[j_file, i]
-        rate_z_pi[j_file, i] = dN/dt/V*(z_pi[j_file, i]+1)**2*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+        rate_z_pi[j_file, i] = dN/dt/V/(z_pi[j_file, i]+1)*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
     cum_rate = cumtrapz(rate_z_pi[j_file, :], x=z_pi[j_file, :-1])
     plt.plot(z_pi[j_file, 1:-1], max(cum_rate)-cum_rate, label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))

@@ -39,10 +39,10 @@ for f in files:
 
 
 print 'plotting'
-plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
+# plt.plot(False, False, color='white', label=(r'For $M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
 for j_file in range(n_file):
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files[j_file]))
-    plt.plot(z[j_file, :], mbh[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))+r'$M_{min}=$'+str(float(paras[1]))+r'$M_{\odot}$'))
+    plt.plot(z[j_file, :], mbh[j_file, :], label=(r'$\eta=$'+str(float(paras[3]))+r'$M_{max}=$'+str(float(paras[2]))+r'$M_{\odot}$'))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 plt.plot(z[0, :], mbh_arr, label=('UXBR Limit'), color='grey', linestyle='-')
 plt.fill_between(z[0, :], mbh_arr, 1.0e5, facecolor='grey')

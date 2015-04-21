@@ -58,7 +58,7 @@ rate_z_cc = np.zeros((n_file, nlev-1))
 for j_file in range(0, n_file):
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files_cc[j_file]))
     for i in range(0, nlev-1):
-        rate_z_cc[j_file, i] = sum(n_cc[j_file, :, i])/(t_cc[j_file, i]-t_cc[j_file, i+1])/V*(1+z_cc[j_file, i])**3
+        rate_z_cc[j_file, i] = sum(n_cc[j_file, :, i])/(t_cc[j_file, i]-t_cc[j_file, i+1])/V
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
@@ -87,7 +87,7 @@ for j_file in range(0, n_file):
         continue
     plot = True
     for i in range(0, nlev-1):
-        rate_z_pi[j_file, i] = sum(n_pi[j_file, :, i])/(t_pi[j_file, i]-t_pi[j_file, i+1])/V*(1+z_pi[j_file, i])**3
+        rate_z_pi[j_file, i] = sum(n_pi[j_file, :, i])/(t_pi[j_file, i]-t_pi[j_file, i+1])/V
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
