@@ -14,7 +14,7 @@ yr = (31557600)**(-1)
 V = 1000 # MPc^3
 
 print ('reading core collapse sn data')
-files_cc = glob.glob(os.path.join('output_mmax', 'sn_rates', 'ccsn*'))
+files_cc = glob.glob(os.path.join('output_sn', 'sn_rates', 'ccsn*'))
 i_file = 0
 n_file = len(files_cc)
 
@@ -33,7 +33,7 @@ for f in files_cc:
     i_file = i_file+1
 
 print ('reading pair instability sn data...')
-files_pi = glob.glob(os.path.join('output_mmax', 'sn_rates', 'pisn*'))
+files_pi = glob.glob(os.path.join('output_sn', 'sn_rates', 'pisn*'))
 i_file = 0
 n_file = len(files_pi)
 

@@ -20,7 +20,7 @@ mbh_arr = np.zeros(nlev)
 mbh_arr.fill(upper_limit)
 
 print 'reading data'
-files = glob.glob(os.path.join('output_mmax', 'z_MBH_*'))
+files = glob.glob(os.path.join('output_sn', 'z_MBH_*'))
 i_file = 0
 n_file = len(files)
 

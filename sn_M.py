@@ -13,7 +13,7 @@ mlev = 256
 yr = (31557600)**(-1)
 
 print 'reading core collapse sn data'
-files_cc = glob.glob(os.path.join('output_mmax', 'sn_rates', 'loc_ccsn_*'))
+files_cc = glob.glob(os.path.join('output_sn', 'sn_rates', 'loc_ccsn_*'))
 files_cc.sort()
 i_file = 0
 n_file = len(files_cc)
@@ -28,8 +28,8 @@ for f in files_cc:
     m_cc = data[:, 1]
     z_cc = data[:, 2]
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(f))
-    plt.scatter(z_cc, m_cc, s=0.02, label=(r'$M_{max}=$'+paras[2]+\
-        r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
+    plt.scatter(z_cc, m_cc, s=0.02, label=(r'$M_{max}=$'+str(float(paras[2]))+\
+        r'$M_{\odot}$'+r'$\eta=$'+str(float(paras[3]))))
     plt.ylabel(r'$M[M_{\odot}]$', size=20)
     plt.xlabel(r'$z$',  size=20)
     plt.legend(bbox_to_anchor=(1.6, 1))
@@ -43,7 +43,7 @@ for f in files_cc:
     plt.clf()
 
 print 'reading pair instability sn data'
-files_pi = glob.glob(os.path.join('output_mmax', 'sn_rates', 'loc_pisn_*'))
+files_pi = glob.glob(os.path.join('output_sn', 'sn_rates', 'loc_pisn_*'))
 files_pi.sort()
 i_file = 0
 n_file = len(files_pi)
@@ -58,8 +58,8 @@ for f in files_pi:
     m_pi = data[:, 1]
     z_pi = data[:, 2]
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(f))
-    plt.scatter(z_pi, m_pi, s=0.02, label=(r'$M_{max}=$'+paras[2]+\
-        r'$M_{\odot}$'+r'$\eta=$'+paras[3]))
+    plt.scatter(z_pi, m_pi, s=0.02, label=(r'$M_{max}=$'+str(float(paras[2]))+\
+        r'$M_{\odot}$'+r'$\eta=$'+str(float(paras[3]))))
     plt.ylabel(r'$M[M_{\odot}]$', size=20)
     plt.xlabel(r'$z$',  size=20)
     plt.legend(bbox_to_anchor=(1.6, 1))

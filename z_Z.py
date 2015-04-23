@@ -18,7 +18,7 @@ V = 30 #Mpc^3
 z_Z_ref = np.loadtxt(os.path.join('..', '..', 'Code', 'Data', 'z_Z.dat'))
 
 print 'reading data'
-files = glob.glob(os.path.join('output_mmax', 'z_Z_*'))
+files = glob.glob(os.path.join('output_sn', 'z_Z_*'))
 files.sort()
 i_file = 0
 n_file = len(files)

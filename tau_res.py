@@ -19,7 +19,7 @@ tau_arr = np.zeros(nlev)
 tau_arr.fill(tau_planck)
 
 print 'reading data'
-files = glob.glob(os.path.join('output_mmax', 'z_tauIII*'))
+files = glob.glob(os.path.join('output_sn', 'z_tauIII*'))
 files.sort()
 i_file = 0
 n_file = len(files)
@@ -55,7 +55,7 @@ plt.xlabel(r'redshift $z$', size = 16)
 plt.xscale('linear')
 plt.xlim(0, 35)
 # plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.0, 0.6))
+plt.legend(bbox_to_anchor=(1.4, 1.0))
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
 plt.savefig(os.path.join('tau.jpg'), bbox_inches='tight')
 #plt.show()

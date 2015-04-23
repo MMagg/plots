@@ -22,7 +22,7 @@ V = 1000 #Mpc^3
 rad_to_arcmin = 10800/np.pi
 
 print 'reading core collapse sn data'
-files_cc = glob.glob(os.path.join('output_mmax', 'sn_rates', 'ccsn*'))
+files_cc = glob.glob(os.path.join('output_sn', 'sn_rates', 'ccsn*'))
 files_cc.sort()
 i_file = 0
 n_file = len(files_cc)
@@ -54,7 +54,7 @@ for f in files_cc:
     i_file = i_file+1
 
 print 'reading pair instability sn data'
-files_pi = glob.glob(os.path.join('output_mmax', 'sn_rates', 'pisn*'))
+files_pi = glob.glob(os.path.join('output_sn', 'sn_rates', 'pisn*'))
 files_pi.sort()
 i_file = 0
 n_file = len(files_pi)
