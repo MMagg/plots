@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import glob
 import os
 import re
+from functions import plot_hummel_vol
+import functions
 
 nlev = 256
 mlev = 256
@@ -64,6 +66,7 @@ for j_file in range(0, n_file):
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 # plt.grid(b=True, which='both', color='0.65',linestyle='-')
+functions.sfr_cc_vol()
 plt.ylabel(r'$\dot{n}[MPc^{-3}yr^{-1}]$', size=20)
 plt.xlabel(r'$z$')
 plt.xscale('linear')
@@ -71,9 +74,9 @@ plt.xlim(0, 35)
 # plt.ylim(1.0e-7,0.1)
 # # print 'total number of CCSN: '+str(sum(n))
 plt.yscale('log')
-plt.legend(bbox_to_anchor=(1.45, 1.1))
+plt.legend(bbox_to_anchor=(1.6, 1.1))
 plt.title(r'Core Collapse Supernova Rate Denstity')
-plt.savefig('CCSN_vol.jpg', bbox_inches='tight')
+plt.savefig('CCSN_vol.eps', bbox_inches='tight')
 # plt.show()
 plt.clf()
 
@@ -94,16 +97,19 @@ for j_file in range(0, n_file):
 
 if plot:
     # plt.grid(b=True, which='both', color='0.65',linestyle='-')
+    functions.sfr_pi_vol()
+    plot_hummel_vol()
     plt.ylabel(r'$\dot{n}[MPc^{-3}yr^{-1}]$', size=20)
     plt.xlabel(r'$z$')
     plt.xscale('linear')
     plt.xlim(0, 35)
+    plt.ylim(1.0e-10, 1.e-4)
     # plt.ylim(1.0e-8,0.01)
     # # print 'total number of CCSN: '+str(sum(n))
     plt.yscale('log')
-    plt.legend(bbox_to_anchor=(1.45, 1.1))
+    plt.legend(bbox_to_anchor=(1.6, 1.1))
     plt.title(r'Pair Instability Supernova Rate Density')
-    plt.savefig('PISN_vol.jpg', bbox_inches='tight')
+    plt.savefig('PISN_vol.eps', bbox_inches='tight')
     # plt.show()
     plt.clf()
 else:

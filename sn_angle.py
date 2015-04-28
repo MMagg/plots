@@ -9,6 +9,8 @@ from numpy import trapz
 import glob
 import os
 import re
+from functions import plot_hummel_angle
+import functions
 
 nlev = 256
 mlev = 256
@@ -89,21 +91,22 @@ for j_file in range(0, n_file):
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
-        rate_z_cc[j_file, i] = dN/dt/V/(z_cc[j_file, i]+1)*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
+        rate_z_cc[j_file, i] = dN/dt/V/(z_cc[j_file, i]+1)*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
-
-plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(arcmin^2yr)^{-1}]$', size=20)
+functions.sfr_cc_angle()
+plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
 plt.xlabel(r'$z$')
 plt.xscale('linear')
 plt.yscale('log')
 plt.xlim(0, 35)
+plt.ylim(1.e-8, 1.e-1)
 plt.yscale('log')
 plt.legend(bbox_to_anchor=(1.6, 1))
-plt.title(r'Core Collapse Supernova Rates$')
-plt.savefig('CCSN_angle.jpg', bbox_inches='tight')
+plt.title(r'Core Collapse Supernova Rates')
+plt.savefig('CCSN_angle.eps', bbox_inches='tight')
 # plt.show()
 plt.clf()
 
@@ -121,21 +124,24 @@ for j_file in range(0, n_file):
         dz = z_pi[j_file, i+1]-z_pi[j_file, i]
         dt = t_pi[j_file, i]-t_pi[j_file, i+1]
         dr = r_pi[j_file, i+1]-r_pi[j_file, i]
-        rate_z_pi[j_file, i] = dN/dt/V/(z_pi[j_file, i]+1)*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)
+        rate_z_pi[j_file, i] = dN/dt/V/(z_pi[j_file, i]+1)*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 if plot:
-    plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(arcmin^2yr)^{-1}]$', size=20)
+    functions.sfr_pi_angle()
+    plot_hummel_angle()
+    plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
     plt.xlabel(r'$z$')
     plt.xscale('linear')
     plt.yscale('log')
     plt.xlim(0, 35)
+    plt.ylim(1.e-8, 1.e-2)
     plt.yscale('log')
     plt.legend(bbox_to_anchor=(1.6, 1))
     plt.title(r'Pair Instability Supernova Rates')
-    plt.savefig('PISN_angle.jpg', bbox_inches='tight')
+    plt.savefig('PISN_angle.eps', bbox_inches='tight')
     #plt.show()
     plt.clf()
 else:

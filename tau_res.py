@@ -12,11 +12,14 @@ n_eta = 3
 n_mmin = 2
 nlev = 256
 mlev = 256
-tau_planck = 0.0961
-sig_tau = 0.0054
+tau_planck14 = 0.092 #?????
+sig_tau14 = 0.013 #??????
 
-tau_arr = np.zeros(nlev)
-tau_arr.fill(tau_planck)
+
+
+tau_arr14 = np.zeros(nlev)
+tau_arr14.fill(tau_planck14)
+
 
 print 'reading data'
 files = glob.glob(os.path.join('output_sn', 'z_tauIII*'))
@@ -45,9 +48,9 @@ for j_file in range(n_file):
     plt.plot(z[j_file, :], tau[j_file, :], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
-plt.plot(z[0, :], tau_arr, label=('Planck 2014'), color='black', linestyle='-')
-plt.plot(z[0, :], tau_arr-sig_tau, label=(r'$1\sigma$ error'), color='black', linestyle='-.')
-plt.plot(z[0, :], tau_arr+sig_tau, color='black', linestyle='-.')
+plt.plot(z[0, :], tau_arr14, label=('Planck 2014'), color='black', linestyle='-')
+plt.plot(z[0, :], tau_arr14-sig_tau14, label=(r'$1\sigma$ error'), color='black', linestyle='-.')
+plt.plot(z[0, :], tau_arr14+sig_tau14, color='black', linestyle='-.')
 
 
 plt.ylabel(r'Optical depth  $\tau$', size=16)
@@ -57,6 +60,7 @@ plt.xlim(0, 35)
 # plt.yscale('log')
 plt.legend(bbox_to_anchor=(1.4, 1.0))
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
+plt.savefig(os.path.join('tau.eps'), bbox_inches='tight')
 plt.savefig(os.path.join('tau.jpg'), bbox_inches='tight')
 #plt.show()
 plt.clf()

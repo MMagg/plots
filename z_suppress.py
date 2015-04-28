@@ -91,7 +91,7 @@ for j_file in range(n_file):
     #plt.yscale('log', nonposy='clip')
     plt.legend(bbox_to_anchor=(1.3, 0.5))
     #plt.grid(b=True, which='both', color='0.65',linestyle='-')
-    plt.savefig('z_supp_mmax'+paras[2]+'mmin'+paras[1]+'.jpg', bbox_inches='tight')
+    plt.savefig('z_supp_mmax'+paras[2]+'mmin'+paras[1]+'.eps', bbox_inches='tight')
     #plt.show()
     plt.clf()
 

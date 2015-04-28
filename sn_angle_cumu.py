@@ -9,6 +9,8 @@ from numpy import trapz
 import glob
 import os
 import re
+from functions import plot_hummel_cumulativ
+import functions
 
 nlev = 256
 mlev = 256
@@ -95,15 +97,15 @@ for j_file in range(0, n_file):
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
-
-plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(arcmin^2yr)^{-1}]$', size=20)
+functions.sfr_cc_cumulativ()
+plt.ylabel(r'$\frac{dN}{dt_{obs}d\Omega}[(10arcmin^2yr)^{-1}]$', size=20)
 plt.xlabel(r'$z$')
 plt.xscale('linear')
 plt.yscale('log')
 plt.xlim(0, 35)
 plt.legend(bbox_to_anchor=(1.6, 1))
-plt.title(r'Cumulativ Core Collapse Supernova Rates$')
-plt.savefig('CCSN_angle_cumulativ.jpg', bbox_inches='tight')
+plt.title(r'Core Collapse Supernova Rates Above Redshift $z$')
+plt.savefig('CCSN_angle_cumulativ.eps', bbox_inches='tight')
 # plt.show()
 plt.clf()
 
@@ -128,14 +130,17 @@ for j_file in range(0, n_file):
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
 
 if plot:
-    plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
+    plot_hummel_cumulativ()
+    functions.sfr_pi_cumulativ()
+    plt.ylabel(r'$\frac{dN}{dt_{obs}d\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
     plt.xlabel(r'$z$')
     plt.xscale('linear')
     plt.yscale('log')
     plt.xlim(0, 35)
+    plt.ylim(1.e-8, 0.1)
     plt.legend(bbox_to_anchor=(1.6, 1))
-    plt.title(r'Cumulativ Pair Instability Supernova Rates')
-    plt.savefig('PISN_angle_cumulativ.jpg', bbox_inches='tight')
+    plt.title(r'Pair Instability Supernova Rates Above Redshift $z$')
+    plt.savefig('PISN_angle_cumulativ.eps', bbox_inches='tight')
     # plt.show()
     plt.clf()
 else:
