@@ -49,7 +49,7 @@ def plot_hummel_cumulativ():
         rate = (dn_dt)*10
         cum_rate = cumtrapz(rate, x=z)
         paras = re.split('formation-rate_|.dat', os.path.basename(f))
-        plt.plot(z[:-1], max(cum_rate)-cum_rate, '-.', label=('Hummel  '+paras[1]))
+        plt.plot(z[:-1], max(cum_rate)-cum_rate, '-.', label=('Hummel et al. 2012 '+paras[1]))
 
 
 def plot_hummel_angle():
@@ -65,7 +65,7 @@ def plot_hummel_angle():
         z = data[:, 1]
         rate = (dn_dt)*10
         paras = re.split('formation-rate_|.dat', os.path.basename(f))
-        plt.plot(z, rate, '-.', label=('Hummel  '+paras[1]))
+        plt.plot(z, rate, '-.', label=('Hummel et al. 2012 '+paras[1]))
 
 
 
@@ -80,9 +80,9 @@ def plot_hummel_vol():
         print os.path.basename(f)
         dn_dt = data[:, 5]
         z = data[:, 1]
-        rate = (dn_dt)*10
+        rate = (dn_dt)
         paras = re.split('formation-rate_|.dat', os.path.basename(f))
-        plt.plot(z, rate, '-.', label=('Hummel  '+paras[1]))
+        plt.plot(z, rate, '-.', label=('Hummel et al. 2012 '+paras[1]))
 
 
 
@@ -100,10 +100,10 @@ def sfr_cc_cumulativ():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn/(z+1)*r**2*dr_dz(z)/(rad_to_arcmin**2)*10
+        rate = n_sn*r**2*dr_dz(z)/(rad_to_arcmin**2)*10 # /(z+1)
         cum_rate = cumtrapz(rate[:], x=z[:])
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z[:-1], max(cum_rate)-cum_rate, ':', label=('From renaissance SFR '+paras[1]))
@@ -123,10 +123,10 @@ def sfr_pi_cumulativ():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn/(z+1)*r**2*dr_dz(z)/(rad_to_arcmin**2)*10
+        rate = n_sn*r**2*dr_dz(z)/(rad_to_arcmin**2)*10 # /(z+1)
         cum_rate = cumtrapz(rate[:], x=z[:])
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z[:-1], max(cum_rate)-cum_rate, ':', label=('From renaissance SFR '+paras[1]))
@@ -146,10 +146,10 @@ def sfr_cc_angle():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn/(z+1)*r**2*dr_dz(z)/(rad_to_arcmin**2)*10
+        rate = n_sn*r**2*dr_dz(z)/(rad_to_arcmin**2)*10 # /(z+1)
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z, rate, ':', label=('From renaissance SFR '+paras[1]))
 
@@ -168,10 +168,10 @@ def sfr_pi_angle():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn/(z+1)*r**2*dr_dz(z)/(rad_to_arcmin**2)*10
+        rate = n_sn*r**2*dr_dz(z)/(rad_to_arcmin**2)*10 # /(z+1)
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z, rate, ':', label=('From renaissance SFR '+paras[1]))
 
@@ -189,10 +189,10 @@ def sfr_cc_vol():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn
+        rate = n_sn *(z+1)
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z, rate, ':', label=('From renaissance SFR '+paras[1]))
 
@@ -211,9 +211,9 @@ def sfr_pi_vol():
         z = data[:, 0]
         t = data[:, 1]*yr*10**6
         temp = cumtrapz(dr_dz(z), x=z)
-        z_0 = trapz(dr_dz(np.linspace(0, z[0], 1000)), x=np.linspace(0, z[0], 1000))
-        r = np.hstack([z_0, temp+z_0])
+        z_0 = trapz(dr_dz(np.linspace(0, min(z), 1000)), x=np.linspace(0, min(z), 1000))
+        r = np.hstack([temp+z_0, z_0])
         n_sn = SFR*f_sn
-        rate = n_sn
+        rate = n_sn*(z+1)
         paras = re.split('SFR_|.txt', os.path.basename(f))
         plt.plot(z, rate, ':', label=('From renaissance SFR '+paras[1]))
