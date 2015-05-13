@@ -12,3 +12,5 @@ print 'supression plots'
 execfile(os.path.join(directory,'z_suppress.py'))
 print 'metallicity plots'
 execfile(os.path.join(directory,'z_Z.py'))
+print 'effective eta  plots'
+execfile(os.path.join(directory,'eff_eta.py'))

@@ -35,7 +35,7 @@ for f in files_cc:
     plt.legend(bbox_to_anchor=(1.6, 1))
     plt.title(r'Host Galaxy Mass distribution of Core Collapse SN')
     plt.xscale('linear')
-    plt.xlim(0, 35)
+    plt.xlim(0, 40)
     plt.ylim(1.0e5,1.0e8)
     plt.yscale('log')
     plt.savefig('CCSN_distribution_eta'+str(paras[3])+'.jpg', bbox_inches='tight')

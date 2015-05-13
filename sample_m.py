@@ -1,5 +1,5 @@
 """Program to sample values from a propability distribution
-Author: M. Magg""" 
+Author: M. Magg"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,7 +37,7 @@ def sample_mass(dn, m, n=1): # Function to sample random values
 def sample(X_of_Xi, n=1):
     a = np.random.random(n)
     return X_of_Xi(a)
-    
+
 def dn_dm(m, sigma, alpha):
     ny = del_c/sigma
     y = np.sqrt(2./np.pi)*rho_m/m**2*(-alpha)*ny*np.exp(-ny**2/2)
@@ -45,6 +45,7 @@ def dn_dm(m, sigma, alpha):
     return y
 
 data = np.loadtxt(os.path.join('..', 'Code', 'Data', 'pk_Planck13.dat.spline'), skiprows = 1)
+# data = np.loadtxt(os.path.join('wmap.spline'), skiprows = 1)
 m = data[skip:,0]
 sigma = data[skip:,1]
 alpha = data[skip:,3] # d ln \sigma / d ln m
@@ -81,6 +82,8 @@ while M_sum <= M_max:
         #if m1 > 1e6 and m1<1e9 and np.random.random(1) < 0.05 :
         #gal_list_low.append(m1)
 gal_list = np.array(gal_list)
+gal_list.sort()
+gal_list = gal_list[::-1]
 plt.figure(figsize = (8,8))
 plt.hist(gal_list, log = True, bins=np.logspace(9, 15, 60))
 plt.xscale('log')
@@ -93,10 +96,10 @@ if M_sum/M_max*100.<102. and sys.argv[1] == '-output':
     print 'Number of high M halos:', len(gal_list)
     print 'Mass in low M halos:', sum(gal_list_low)/0.05
     gal_list = np.hstack([len(gal_list), gal_list])
-    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list.dat'), gal_list)
+    np.savetxt(os.path.join('galaxy_list.dat'), gal_list)
     gal_list_low = np.hstack([len(gal_list_low), gal_list_low])
-    np.savetxt(os.path.join('..', 'work', 'Data', 'galaxy_list_low.dat'), gal_list_low)
-    plt.savefig('../plots/galaxy_distr.jpg')
+    np.savetxt(os.path.join('galaxy_list_low.dat'), gal_list_low)
+    plt.savefig('galaxy_distr.jpg')
 elif M_sum/M_max*100.>=102. and sys.argv[1] == '-output':
     print 'ERROR: SAMPLING ENDED BY LARGE GALAXY'
     print 'NO OUTPUT FILES WRITTEN'
@@ -108,7 +111,7 @@ elif sys.argv[1] == '-nooutput':
 else:
     print 'invalid argument'
     print 'use -output or -nooutput'
-plt.show()    
+plt.show()
 
 """
 plt.plot(m, dn, '.')

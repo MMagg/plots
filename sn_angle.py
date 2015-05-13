@@ -15,13 +15,14 @@ import functions
 nlev = 256
 mlev = 256
 yr = (31557600)**(-1) #yr/s
-H_0 = 67.77 # km/s/Mpc
 c = 3.0e10 # cm/s
 km_to_cm = 1.0e5 # cm/km
 omega_m = 0.3086
 omega_l = 0.6914
+H_0 = 67.77 # km/s/Mpc
 V = 1000 #Mpc^3
 rad_to_arcmin = 10800/np.pi
+
 
 print 'reading core collapse sn data'
 files_cc = glob.glob(os.path.join('output_sn', 'sn_rates', 'ccsn*'))
@@ -80,21 +81,27 @@ for f in files_pi:
     r_pi[i_file,:] = np.hstack([z_0, temp+z_0])
     i_file = i_file+1
 
-
+# labels=['Planck Tabled', 'WMAP Analytical A', 'WMAP Analytical B', 'Planck Analytical A', 'Planck Analytical B']
 # redshift plots
 print 'plotting as function of redshift'
 rate_z_cc = np.zeros((n_file, nlev-1))
 for j_file in range(0, n_file):
     paras = re.split('IMFmin|IMFmax|eta|slope|.dat', os.path.basename(files_cc[j_file]))
+    file_rate = np.zeros((nlev-1, 2))
     for i in range(0, nlev-1):
         dN = sum(n_cc[j_file, :, i])
         dz = z_cc[j_file, i+1]-z_cc[j_file, i]
         dt = t_cc[j_file, i]-t_cc[j_file, i+1]
         dr = r_cc[j_file, i+1]-r_cc[j_file, i]
         rate_z_cc[j_file, i] = dN/dt/V/(z_cc[j_file, i]+1)*r_cc[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+        if rate_z_cc[j_file, i]==0 and i>100:
+            rate_z_cc[j_file, i]=rate_z_cc[j_file, i-1]/2.
+            rate_z_cc[j_file, i-1]=rate_z_cc[j_file, i-1]/2.
+        file_rate[i,:] = z_cc[j_file, i], rate_z_cc[j_file, i]
+    np.savetxt('rate_cc.txt', file_rate, delimiter=', ', newline='\n')
     plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
-    # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
+    #plt.plot(z_cc[j_file, :-1], rate_z_cc[j_file], label=(labels[j_file]))
 
 functions.sfr_cc_angle()
 plt.ylabel(r'$\frac{dN}{dt_{obs}dzd\Omega}[(10 arcmin^2yr)^{-1}]$', size=20)
@@ -125,6 +132,11 @@ for j_file in range(0, n_file):
         dt = t_pi[j_file, i]-t_pi[j_file, i+1]
         dr = r_pi[j_file, i+1]-r_pi[j_file, i]
         rate_z_pi[j_file, i] = dN/dt/V/(z_pi[j_file, i]+1)*r_pi[j_file, i]**2*dr/dz/(rad_to_arcmin**2)*10
+        file_rate[i,:] = z_pi[j_file, i], rate_z_pi[j_file, i]
+        if rate_z_pi[j_file, i]==0 and i>100:
+            rate_z_pi[j_file, i]=rate_z_pi[j_file, i-1]/2.
+            rate_z_pi[j_file, i-1]=rate_z_pi[j_file, i-1]/2.
+    np.savetxt('rate_pi_eta'+paras[3]+'.txt', file_rate, delimiter=', ', newline='\n')
     plt.plot(z_pi[j_file, :-1], rate_z_pi[j_file], label=(r'$M_{max}=$'+str(float(paras[2]))+\
         r'$M_{\odot}$'+'\n'+r'$\eta=$'+str(float(paras[3]))))
     # '\n'+r'$M_{max}=$'+paras[2]+r'$M_{\odot}$'+
